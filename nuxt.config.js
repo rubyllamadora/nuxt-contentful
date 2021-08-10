@@ -1,4 +1,4 @@
-const {getConfigForKeys} = require('./lib/config.js')
+const { getConfigForKeys } = require('./lib/config.js')
 const ctfConfig = getConfigForKeys([
   'CTF_BLOG_POST_TYPE_ID',
   'CTF_SPACE_ID',
@@ -6,7 +6,7 @@ const ctfConfig = getConfigForKeys([
   'CTF_CMA_ACCESS_TOKEN',
   'CTF_PERSON_ID'
 ])
-const {createClient} = require('./plugins/contentful')
+const { createClient } = require('./plugins/contentful')
 const cdaClient = createClient(ctfConfig)
 const cmaContentful = require('contentful-management')
 const cmaClient = cmaContentful.createClient({
@@ -42,7 +42,7 @@ const config = {
     /*
     ** Run ESLINT on save
     */
-    extend (config, ctx) {
+    extend(config, ctx) {
       if (ctx.isClient) {
         config.module.rules.push({
           enforce: 'pre',
@@ -66,7 +66,7 @@ const config = {
         }
       }
     },
-    babel:{
+    babel: {
       plugins: [
         ['@babel/plugin-proposal-private-property-in-object', { loose: true }]
       ]
@@ -81,6 +81,12 @@ const config = {
     '~/plugins/contentful'
   ],
 
+  modules: [
+    // Passing options directly
+    ['~/modules/basic-page', { token: '123' }]
+  ],
+  exampleMsg: 'can be accessed in this.options',
+
   /*
   ** ᕕ( ᐛ )ᕗ CTF-BLOG-IN-5-MINUTES
   ** Get all blog posts from Contentful
@@ -91,7 +97,7 @@ const config = {
   ** - available blog post tags
   */
   generate: {
-    routes () {
+    routes() {
       return Promise.all([
         // get all blog posts
         cdaClient.getEntries({
